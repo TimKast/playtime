@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "firstName": "t",
+      "lastName": "t",
+      "email": "tim@kastner.de",
+      "password": "123",
+      "_id": "773d51e0-d635-4a0e-b0d7-ba8e05ac7c57"
+    }
+  ],
+  "playlists": [],
+  "tracks": []
+}

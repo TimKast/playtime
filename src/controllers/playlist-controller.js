@@ -17,7 +17,7 @@ export const playlistController = {
         artist: request.payload.artist,
         duration: request.payload.duration,
       };
-      await db.trackStore.addTrack(newTrack, id);
+      await db.trackStore.addTrack(id, newTrack);
       return h.redirect(`/playlist/${id}`);
     },
   },
@@ -26,7 +26,7 @@ export const playlistController = {
     handler: async function (request, h) {
       const { id } = request.params;
       const track = await db.trackStore.getTrackById(id);
-      await db.trackStore.deleteTrackById(id);
+      await db.trackStore.deleteTrack(id);
       return h.redirect(`/playlist/${track.playlistId}`);
     },
   },
