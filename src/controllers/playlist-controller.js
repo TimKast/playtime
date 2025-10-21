@@ -1,4 +1,5 @@
 import { db } from "../models/db.js";
+import { trackSpec } from "../models/joi-schemas.js";
 
 export const playlistController = {
   index: {
@@ -10,6 +11,13 @@ export const playlistController = {
   },
 
   addTrack: {
+    validate: {
+      payload: trackSpec,
+      options: { abortEarly: false },
+      failAction: function (request, h, error) {
+        return h.view("playlist-view", { title: "Add track error", errors: error.details }).takeover().code(400);
+      },
+    },
     handler: async function (request, h) {
       const { id } = request.params;
       const newTrack = {
