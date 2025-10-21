@@ -122,4 +122,4 @@ dist
 .pnp.*
 
 # lowdb Local file
-.db.json
+db.json
