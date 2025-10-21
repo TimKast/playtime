@@ -1,0 +1,32 @@
+<table class="table is-fullwidth">
+  <thead>
+    <tr>
+      <th style="width: 40%;">Track</th>
+      <th style="width: 30%;">Artist</th>
+      <th style="width: 20%;">Duration</th>
+      <th style="width: 10%;"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each playlist.tracks}}
+      <tr>
+        <form action="/playlist/deletetrack/{{_id}}" method="post">
+          <td>
+            {{title}}
+          </td>
+          <td>
+            {{artist}}
+          </td>
+          <td>
+            {{duration}}
+          </td>
+          <td class="has-text-centered">
+            <button class="button" type="submit">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </form>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
