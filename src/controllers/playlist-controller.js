@@ -1,5 +1,5 @@
 import { db } from "../models/db.js";
-import { trackSpec } from "../models/joi-schemas.js";
+import { TrackSpec } from "../models/joi-schemas.js";
 
 export const playlistController = {
   index: {
@@ -12,7 +12,7 @@ export const playlistController = {
 
   addTrack: {
     validate: {
-      payload: trackSpec,
+      payload: TrackSpec,
       options: { abortEarly: false },
       failAction: function (request, h, error) {
         return h.view("playlist-view", { title: "Add track error", errors: error.details }).takeover().code(400);
