@@ -8,7 +8,7 @@ export const trackMemStore = {
     return tracks;
   },
 
-  async addTrack(track, playlistId ) {
+  async addTrack(playlistId, track) {
     track._id = v4();
     track.playlistId = playlistId;
     tracks.push(track);
@@ -23,7 +23,7 @@ export const trackMemStore = {
     return tracks.find((track) => track._id === id);
   },
 
-  async deleteTrackById(id) {
+  async deleteTrack(id) {
     const index = tracks.findIndex((track) => track._id === id);
     tracks.splice(index, 1);
   },
