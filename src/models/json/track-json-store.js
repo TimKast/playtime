@@ -16,20 +16,28 @@ export const trackJsonStore = {
     return track;
   },
 
-  async getTracksByPlaylistId(id) {
+  async getTracksByPlaylistId(playlistId) {
     await db.read();
-    return db.data.tracks.filter((track) => track.playlistId === id);
+    let foundTracks = db.data.tracks.filter((track) => track.playlistId === playlistId);
+    if (!foundTracks) {
+      foundTracks = null;
+    }
+    return foundTracks;
   },
 
   async getTrackById(id) {
     await db.read();
-    return db.data.tracks.find((track) => track._id === id);
+    let foundTrack = db.data.tracks.find((track) => track._id === id);
+    if (!foundTrack) {
+      foundTrack = null;
+    }
+    return foundTrack;
   },
 
   async deleteTrack(id) {
     await db.read();
     const index = db.data.tracks.findIndex((track) => track._id === id);
-    db.data.tracks.splice(index, 1);
+    if (index !== -1) db.data.tracks.splice(index, 1);
     await db.write();
   },
 
