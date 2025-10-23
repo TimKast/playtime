@@ -26,6 +26,11 @@ export const testUsers = [
   },
 ];
 
+export const vivaldi = {
+  title: "Vivaldi Concertos",
+  tracks: [],
+};
+
 export const violin = {
   title: "Violin Concertos",
   tracks: [],
@@ -43,5 +48,29 @@ export const testPlaylists = [
   {
     title: "Jazz",
     tracks: [],
+  },
+];
+
+export const fourSeasons = {
+  title: "The Four Seasons",
+  artist: "Vivaldi",
+  duration: 8,
+};
+
+export const testTracks = [
+  {
+    title: "Piano Sonata No. 3",
+    artist: "Beethoven",
+    duration: 5,
+  },
+  {
+    title: "Piano Sonata No. 7",
+    artist: "Beethoven",
+    duration: 6,
+  },
+  {
+    title: "Piano Sonata No. 10",
+    artist: "Beethoven",
+    duration: 4,
   },
 ];

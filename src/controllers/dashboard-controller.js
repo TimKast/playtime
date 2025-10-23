@@ -36,13 +36,8 @@ export const dashboardController = {
 
   deletePlaylist: {
     handler: async function (request, h) {
-      const loggedInUser = request.auth.credentials;
-      const playlistId = request.params.id;
-      const playlist = await db.playlistStore.getPlaylistById(playlistId);
-
-      if (playlist.userId === loggedInUser._id) {
-        await db.playlistStore.deletePlaylistById(playlistId);
-      }
+      const playlist = await db.playlistStore.getPlaylistById(request.params.id);
+      await db.playlistStore.deletePlaylistById(playlist._id);
       return h.redirect("/dashboard");
     },
   },

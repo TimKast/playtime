@@ -1,10 +1,11 @@
 import { assert } from "chai";
 import { db } from "../src/models/db.js";
 import { testPlaylists, violin } from "./fixtures.js";
+import { assertSubset } from "./test-utils.js";
 
 suite("Playlist Model", () => {
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
     await db.playlistStore.deleteAllPlaylists();
   });
 
@@ -12,7 +13,7 @@ suite("Playlist Model", () => {
     const playlist = await db.playlistStore.addPlaylist({
       name: "My Playlist",
     });
-    assert.equal(playlist.name, "My Playlist");
+    assertSubset(playlist.name, "My Playlist");
   });
 
   test("Delete all playlists", async () => {
@@ -30,7 +31,7 @@ suite("Playlist Model", () => {
   test("get a playlist - success", async () => {
     const playlist = await db.playlistStore.addPlaylist(violin);
     const returnedPlaylist = await db.playlistStore.getPlaylistById(playlist._id);
-    assert.deepEqual(violin, returnedPlaylist);
+    assertSubset(violin, returnedPlaylist);
   });
 
   test("Delete one playlist - success", async () => {
