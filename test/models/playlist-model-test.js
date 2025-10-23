@@ -1,12 +1,17 @@
+import mongoose from "mongoose";
 import { assert } from "chai";
-import { db } from "../src/models/db.js";
-import { testPlaylists, violin } from "./fixtures.js";
-import { assertSubset } from "./test-utils.js";
+import { db } from "../../src/models/db.js";
+import { testPlaylists, violin } from "../fixtures.js";
+import { assertSubset } from "../test-utils.js";
 
 suite("Playlist Model", () => {
   setup(async () => {
     db.init("mongo");
     await db.playlistStore.deleteAllPlaylists();
+  });
+
+  after(async () => {
+    await mongoose.disconnect();
   });
 
   test("Add a playlist", async () => {
