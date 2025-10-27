@@ -21,7 +21,7 @@ suite("Track Model tests", () => {
     const vivaldiList = await db.playlistStore.addPlaylist(vivaldi);
     const track = await db.trackStore.addTrack(vivaldiList._id, fourSeasons);
     assert.isNotNull(track._id);
-    assertSubset(fourSeasons, track);
+    assert.isTrue(assertSubset(fourSeasons, track));
   });
 
   test("get multiple tracks", async () => {
@@ -41,7 +41,7 @@ suite("Track Model tests", () => {
     const vivaldiList = await db.playlistStore.addPlaylist(vivaldi);
     const track = await db.trackStore.addTrack(vivaldiList._id, fourSeasons);
     const newTrack = await db.trackStore.getTrackById(track._id);
-    assertSubset(fourSeasons, newTrack);
+    assert.isTrue(assertSubset(fourSeasons, newTrack));
   });
 
   test("delete One Track - success", async () => {

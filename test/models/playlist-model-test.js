@@ -15,10 +15,9 @@ suite("Playlist Model", () => {
   });
 
   test("Add a playlist", async () => {
-    const playlist = await db.playlistStore.addPlaylist({
-      name: "My Playlist",
-    });
-    assertSubset(playlist.name, "My Playlist");
+    const playlist = await db.playlistStore.addPlaylist(violin);
+    assert.isTrue(assertSubset(violin, playlist));
+    assert.isDefined(playlist._id);
   });
 
   test("Delete all playlists", async () => {
@@ -36,7 +35,7 @@ suite("Playlist Model", () => {
   test("get a playlist - success", async () => {
     const playlist = await db.playlistStore.addPlaylist(violin);
     const returnedPlaylist = await db.playlistStore.getPlaylistById(playlist._id);
-    assertSubset(violin, returnedPlaylist);
+    assert.isTrue(assertSubset(violin, returnedPlaylist));
   });
 
   test("Delete one playlist - success", async () => {

@@ -3,7 +3,7 @@ import { assertSubset } from "../test-utils.js";
 import { db } from "../../src/models/db.js";
 import { maggie, testUsers } from "../fixtures.js";
 
-suite("User API tests", () => {
+suite("User Model tests", () => {
   setup(async () => {
     db.init("mongo");
     await db.userStore.deleteAll();
@@ -15,7 +15,7 @@ suite("User API tests", () => {
 
   test("Create a user", async () => {
     const newUser = await db.userStore.addUser(maggie);
-    assertSubset(maggie, newUser);
+    assert.isTrue(assertSubset(maggie, newUser));
   });
 
   test("Delete all users", async () => {

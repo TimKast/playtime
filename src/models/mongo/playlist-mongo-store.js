@@ -32,7 +32,6 @@ export const playlistMongoStore = {
 
   async deletePlaylistById(id) {
     try {
-      console.log("Deleting playlist with id:", id);
       await Playlist.deleteOne({ _id: id });
     } catch (error) {
       console.log("bad id");

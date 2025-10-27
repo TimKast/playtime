@@ -1,3 +1,5 @@
+export const serviceUrl = "http://localhost:3000";
+
 export const maggie = {
   firstName: "Maggie",
   lastName: "Simpson",
@@ -28,26 +30,21 @@ export const testUsers = [
 
 export const vivaldi = {
   title: "Vivaldi Concertos",
-  tracks: [],
 };
 
 export const violin = {
   title: "Violin Concertos",
-  tracks: [],
 };
 
 export const testPlaylists = [
   {
     title: "Classical Music",
-    tracks: [],
   },
   {
     title: "Rock and Roll",
-    tracks: [],
   },
   {
     title: "Jazz",
-    tracks: [],
   },
 ];
 
