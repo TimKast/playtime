@@ -5,16 +5,27 @@ export const playlistApi = {
   create: {
     auth: false,
     handler: async function (request, h) {
-      const playlist = await db.playlistStore.addPlaylist(request.payload);
-      return h.response(playlist).code(201);
+      try {
+        const playlist = await db.playlistStore.addPlaylist(request.payload);
+        if (!playlist) {
+          return Boom.badImplementation("error creating playlist");
+        }
+        return h.response(playlist).code(201);
+      } catch (err) {
+        return Boom.serverUnavailable("Something went wrong");
+      }
     },
   },
 
   find: {
     auth: false,
     handler: async function (request, h) {
-      const list = await db.playlistStore.getAllPlaylists();
-      return h.response(list).code(200);
+      try {
+        const list = await db.playlistStore.getAllPlaylists();
+        return h.response(list).code(200);
+      } catch (err) {
+        return Boom.serverUnavailable("Something went wrong");
+      }
     },
   },
 
@@ -37,8 +48,12 @@ export const playlistApi = {
   deleteAll: {
     auth: false,
     handler: async function (request, h) {
-      await db.playlistStore.deleteAllPlaylists();
-      return h.response().code(204);
+      try {
+        await db.playlistStore.deleteAllPlaylists();
+        return h.response().code(204);
+      } catch (err) {
+        return Boom.serverUnavailable("Something went wrong");
+      }
     },
   },
 };
