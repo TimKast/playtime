@@ -34,7 +34,7 @@ export const playlistMongoStore = {
     try {
       await Playlist.deleteOne({ _id: id });
     } catch (error) {
-      console.log("bad id");
+      /* empty */
     }
   },
 

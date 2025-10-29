@@ -31,7 +31,7 @@ export const trackMongoStore = {
     try {
       await Track.deleteOne({ _id: id });
     } catch (error) {
-      console.log("bad id");
+      /* empty */
     }
   },
 

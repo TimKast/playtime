@@ -7,12 +7,12 @@
   "type": "module",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "DOTENV_CONFIG_QUIET=true node src/server.js",
     "lint": "./node_modules/.bin/eslint . --ext .js",
-    "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**.js -exit",
-    "testmodels": "./node_modules/mocha/bin/_mocha --ui tdd test/models/**/*.js",
-    "testapi": "./node_modules/mocha/bin/_mocha --ui tdd test/api/**/*.js",
-    "dev": "./node_modules/.bin/nodemon  src/server.js --ignore 'src/models/json/*.json'"
+    "test": "DOTENV_CONFIG_QUIET=true ./node_modules/mocha/bin/_mocha --ui tdd test/**/*.js -exit",
+    "testmodels": "DOTENV_CONFIG_QUIET=true ./node_modules/mocha/bin/_mocha --ui tdd test/models/**/*.js",
+    "testapi": "DOTENV_CONFIG_QUIET=true ./node_modules/mocha/bin/_mocha --ui tdd test/api/**/*.js",
+    "dev": "DOTENV_CONFIG_QUIET=true ./node_modules/.bin/nodemon  src/server.js --ignore 'src/models/json/*.json'"
   },
   "devDependencies": {
     "axios": "^1.12.2",
@@ -33,7 +33,8 @@
     "@hapi/vision": "^7.0.3",
     "dotenv": "^17.2.3",
     "handlebars": "^4.7.8",
-    "joi": "^18.0.1",
+    "hapi-swagger": "^17.3.2",
+    "joi": "^17.13.3",
     "lowdb": "^7.0.1",
     "mongoose": "^8.19.2",
     "uuid": "^13.0.0"
