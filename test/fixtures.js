@@ -48,6 +48,12 @@ export const testPlaylists = [
   },
 ];
 
+export const violinConcerto = {
+  title: "Violin Concerto, Op.64",
+  artist: "Mendelssohn",
+  duration: 7,
+};
+
 export const fourSeasons = {
   title: "The Four Seasons",
   artist: "Vivaldi",

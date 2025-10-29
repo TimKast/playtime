@@ -1,7 +1,10 @@
 import { assert } from "chai";
-import { fourSeasons, testTracks, violin } from "../fixtures.js";
+import { EventEmitter } from "events";
+import { testTracks, violin, violinConcerto } from "../fixtures.js";
 import { playtimeService } from "./playtime-service.js";
 import { assertSubset } from "../test-utils.js";
+
+EventEmitter.setMaxListeners(25);
 
 suite("Track API tests", () => {
   let playlist = null;
@@ -18,10 +21,8 @@ suite("Track API tests", () => {
   teardown(async () => {});
 
   test("create a track", async () => {
-    const newTrack = await playtimeService.createTrack(playlist._id, fourSeasons);
-    console.log(fourSeasons);
-    console.log(newTrack);
-    assert.isTrue(assertSubset(fourSeasons, newTrack));
+    const newTrack = await playtimeService.createTrack(playlist._id, violinConcerto);
+    assert.isTrue(assertSubset(violinConcerto, newTrack));
     assert.isDefined(newTrack._id);
   });
 
