@@ -4,6 +4,7 @@ import Handlebars from "handlebars";
 import path from "path";
 import Cookie from "@hapi/cookie";
 import Joi from "joi";
+import Inert from "@hapi/inert";
 import { fileURLToPath } from "url";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { webRoutes } from "./web-routes.js";
@@ -22,6 +23,7 @@ async function init() {
 
   await server.register(Vision);
   await server.register(Cookie);
+  await server.register(Inert);
   server.validator(Joi);
 
   server.auth.strategy("session", "cookie", {
