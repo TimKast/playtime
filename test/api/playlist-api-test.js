@@ -11,7 +11,7 @@ suite("Playlist API tests", () => {
       testPlaylists[i] = await playtimeService.createPlaylist(testPlaylists[i]);
     }
   });
-  after(async () => {});
+  teardown(async () => {});
 
   test("create a playlist", async () => {
     const newPlaylist = await playtimeService.createPlaylist(vivaldi);

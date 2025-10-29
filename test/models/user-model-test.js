@@ -12,6 +12,7 @@ suite("User Model tests", () => {
       testUsers[i] = await db.userStore.addUser(testUsers[i]);
     }
   });
+  teardown(async () => {});
 
   test("Create a user", async () => {
     const newUser = await db.userStore.addUser(maggie);

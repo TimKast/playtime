@@ -11,7 +11,7 @@ suite("User API tests", () => {
       testUsers[i] = await playtimeService.createUser(testUsers[i]);
     }
   });
-  after(async () => {});
+  teardown(async () => {});
 
   test("create a user", async () => {
     const newUser = await playtimeService.createUser(maggie);

@@ -1,4 +1,5 @@
 import { playlistApi } from "./api/playlist-api.js";
+import { trackApi } from "./api/track-api.js";
 import { userApi } from "./api/user-api.js";
 
 export const apiRoutes = [
@@ -11,4 +12,9 @@ export const apiRoutes = [
   { method: "GET", path: "/api/playlists", config: playlistApi.find },
   { method: "GET", path: "/api/playlists/{id}", config: playlistApi.findOne },
   { method: "DELETE", path: "/api/playlists", config: playlistApi.deleteAll },
+
+  { method: "GET", path: "/api/tracks", config: trackApi.find },
+  { method: "GET", path: "/api/tracks/{id}", config: trackApi.findOne },
+  { method: "POST", path: "/api/playlists/{id}/tracks", config: trackApi.create },
+  { method: "DELETE", path: "/api/tracks", config: trackApi.deleteAll },
 ];

@@ -1,0 +1,61 @@
+import { assert } from "chai";
+import { fourSeasons, testTracks, violin } from "../fixtures.js";
+import { playtimeService } from "./playtime-service.js";
+import { assertSubset } from "../test-utils.js";
+
+suite("Track API tests", () => {
+  let playlist = null;
+
+  setup(async () => {
+    await playtimeService.deleteAllPlaylists();
+    await playtimeService.deleteAllTracks();
+    playlist = await playtimeService.createPlaylist(violin);
+    for (let i = 0; i < testTracks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      testTracks[i] = await playtimeService.createTrack(playlist._id, testTracks[i]);
+    }
+  });
+  teardown(async () => {});
+
+  test("create a track", async () => {
+    const newTrack = await playtimeService.createTrack(playlist._id, fourSeasons);
+    console.log(fourSeasons);
+    console.log(newTrack);
+    assert.isTrue(assertSubset(fourSeasons, newTrack));
+    assert.isDefined(newTrack._id);
+  });
+
+  test("delete all tracks", async () => {
+    let returnedTracks = await playtimeService.getAllTracks();
+    assert.equal(returnedTracks.length, 3);
+    await playtimeService.deleteAllTracks();
+    returnedTracks = await playtimeService.getAllTracks();
+    assert.equal(returnedTracks.length, 0);
+  });
+
+  test("get a track - success", async () => {
+    const track = await playtimeService.getTrack(testTracks[0]._id);
+    assert.deepEqual(track, testTracks[0]);
+  });
+
+  test("get a track - bad id", async () => {
+    try {
+      await playtimeService.getTrack("bad-id");
+      assert.fail("should not get response");
+    } catch (error) {
+      assert(error.response.data.message === "No Track with this id");
+      assert.equal(error.response.data.statusCode, 404);
+    }
+  });
+
+  test("get a track - deleted", async () => {
+    await playtimeService.deleteAllTracks();
+    try {
+      await playtimeService.getTrack(testTracks[0]._id);
+      assert.fail("schould not get response");
+    } catch (error) {
+      assert(error.response.data.message === "No Track with this id");
+      assert.equal(error.response.data.statusCode, 404);
+    }
+  });
+});

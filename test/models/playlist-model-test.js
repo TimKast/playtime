@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { assert } from "chai";
 import { db } from "../../src/models/db.js";
 import { testPlaylists, violin } from "../fixtures.js";
@@ -9,10 +8,7 @@ suite("Playlist Model", () => {
     db.init("mongo");
     await db.playlistStore.deleteAllPlaylists();
   });
-
-  after(async () => {
-    await mongoose.disconnect();
-  });
+  teardown(async () => {});
 
   test("Add a playlist", async () => {
     const playlist = await db.playlistStore.addPlaylist(violin);

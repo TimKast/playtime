@@ -1,17 +1,17 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
 
-export const playlistApi = {
+export const trackApi = {
   create: {
     auth: false,
     handler: async function (request, h) {
       try {
-        const playlist = await db.playlistStore.addPlaylist(request.payload);
-        if (!playlist) {
-          return Boom.badImplementation("error creating playlist");
+        const track = await db.trackStore.addTrack(request.params.id, request.payload);
+        if (!track) {
+          return Boom.badImplementation("error creating track");
         }
-        return h.response(playlist).code(201);
-      } catch (err) {
+        return h.response(track).code(201);
+      } catch (error) {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
@@ -21,9 +21,9 @@ export const playlistApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        const list = await db.playlistStore.getAllPlaylists();
+        const list = await db.trackStore.getAllTracks();
         return h.response(list).code(200);
-      } catch (err) {
+      } catch (error) {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
@@ -33,12 +33,12 @@ export const playlistApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        const playlist = await db.playlistStore.getPlaylistById(request.params.id);
-        if (!playlist) {
-          return Boom.notFound("No Playlist with this id");
+        const track = await db.trackStore.getTrackById(request.params.id);
+        if (!track) {
+          return Boom.notFound("No Track with this id");
         }
-        return h.response(playlist).code(200);
-      } catch (err) {
+        return h.response(track).code(200);
+      } catch (error) {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
@@ -48,9 +48,9 @@ export const playlistApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        await db.playlistStore.deleteAllPlaylists();
+        await db.trackStore.deleteAllTracks();
         return h.response().code(204);
-      } catch (err) {
+      } catch (error) {
         return Boom.serverUnavailable("Something went wrong");
       }
     },

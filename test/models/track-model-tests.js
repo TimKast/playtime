@@ -17,6 +17,8 @@ suite("Track Model tests", () => {
     }
   });
 
+  teardown(async () => {});
+
   test("create single track", async () => {
     const vivaldiList = await db.playlistStore.addPlaylist(vivaldi);
     const track = await db.trackStore.addTrack(vivaldiList._id, fourSeasons);
