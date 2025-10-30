@@ -1,5 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { TrackArray, TrackSpec, TrackSpecPlus, IdSpec } from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const trackApi = {
   create: {
@@ -15,6 +17,11 @@ export const trackApi = {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
+    tags: ["api"],
+    description: "Create a new track",
+    notes: "This endpoint creates a new track in the system.",
+    validate: { params: { id: IdSpec }, payload: TrackSpec, failAction: validationError },
+    response: { schema: TrackSpecPlus, failAction: validationError },
   },
 
   find: {
@@ -27,6 +34,10 @@ export const trackApi = {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
+    tags: ["api"],
+    description: "Get all tracks",
+    notes: "This endpoint retrieves all tracks from the system.",
+    response: { schema: TrackArray, failAction: validationError },
   },
 
   findOne: {
@@ -42,6 +53,11 @@ export const trackApi = {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
+    tags: ["api"],
+    description: "Get a specific track",
+    notes: "This endpoint retrieves a track by their id.",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: TrackSpecPlus, failAction: validationError },
   },
 
   deleteAll: {
@@ -54,5 +70,8 @@ export const trackApi = {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
+    tags: ["api"],
+    description: "Delete all tracks",
+    notes: "This endpoint deletes all tracks from the system.",
   },
 };

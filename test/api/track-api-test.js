@@ -6,6 +6,8 @@ import { assertSubset } from "../test-utils.js";
 
 EventEmitter.setMaxListeners(25);
 
+const tracks = new Array(testTracks.length);
+
 suite("Track API tests", () => {
   let playlist = null;
 
@@ -15,7 +17,7 @@ suite("Track API tests", () => {
     playlist = await playtimeService.createPlaylist(violin);
     for (let i = 0; i < testTracks.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      testTracks[i] = await playtimeService.createTrack(playlist._id, testTracks[i]);
+      tracks[i] = await playtimeService.createTrack(playlist._id, testTracks[i]);
     }
   });
   teardown(async () => {});
@@ -35,8 +37,8 @@ suite("Track API tests", () => {
   });
 
   test("get a track - success", async () => {
-    const track = await playtimeService.getTrack(testTracks[0]._id);
-    assert.deepEqual(track, testTracks[0]);
+    const track = await playtimeService.getTrack(tracks[0]._id);
+    assert.deepEqual(track, tracks[0]);
   });
 
   test("get a track - bad id", async () => {
@@ -52,8 +54,8 @@ suite("Track API tests", () => {
   test("get a track - deleted", async () => {
     await playtimeService.deleteAllTracks();
     try {
-      await playtimeService.getTrack(testTracks[0]._id);
-      assert.fail("schould not get response");
+      await playtimeService.getTrack(tracks[0]._id);
+      assert.fail("should not get response");
     } catch (error) {
       assert(error.response.data.message === "No Track with this id");
       assert.equal(error.response.data.statusCode, 404);

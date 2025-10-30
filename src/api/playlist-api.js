@@ -1,5 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { PlaylistArray, PlaylistSpec, IdSpec, PlaylistSpecPlus } from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const playlistApi = {
   create: {
@@ -12,9 +14,15 @@ export const playlistApi = {
         }
         return h.response(playlist).code(201);
       } catch (err) {
+        // console.log(err);
         return Boom.serverUnavailable("Something went wrong");
       }
     },
+    tags: ["api"],
+    description: "Create a new playlist",
+    notes: "This endpoint creates a new playlist in the system.",
+    validate: { payload: PlaylistSpec, failAction: validationError },
+    response: { schema: PlaylistSpecPlus, failAction: validationError },
   },
 
   find: {
@@ -27,6 +35,10 @@ export const playlistApi = {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
+    tags: ["api"],
+    description: "Get all playlists",
+    notes: "This endpoint retrieves all playlists from the system.",
+    response: { schema: PlaylistArray, failAction: validationError },
   },
 
   findOne: {
@@ -42,6 +54,11 @@ export const playlistApi = {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
+    tags: ["api"],
+    description: "Get a specific playlist",
+    notes: "This endpoint retrieves a playlist by their id.",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: PlaylistSpecPlus, failAction: validationError },
   },
 
   deleteAll: {
@@ -54,5 +71,8 @@ export const playlistApi = {
         return Boom.serverUnavailable("Something went wrong");
       }
     },
+    tags: ["api"],
+    description: "Delete all playlists",
+    notes: "This endpoint deletes all playlists from the system.",
   },
 };

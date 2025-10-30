@@ -3,12 +3,14 @@ import { testPlaylists, vivaldi } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 import { playtimeService } from "./playtime-service.js";
 
+const playlist = new Array(testPlaylists.length);
+
 suite("Playlist API tests", () => {
   setup(async () => {
     await playtimeService.deleteAllPlaylists();
     for (let i = 0; i < testPlaylists.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      testPlaylists[i] = await playtimeService.createPlaylist(testPlaylists[i]);
+      playlist[i] = await playtimeService.createPlaylist(testPlaylists[i]);
     }
   });
   teardown(async () => {});
@@ -33,8 +35,8 @@ suite("Playlist API tests", () => {
   });
 
   test("get a playlist - success", async () => {
-    const returnedPlaylist = await playtimeService.getPlaylist(testPlaylists[0]._id);
-    assert.deepEqual(testPlaylists[0], returnedPlaylist);
+    const returnedPlaylist = await playtimeService.getPlaylist(playlist[0]._id);
+    assert.deepEqual(playlist[0], returnedPlaylist);
   });
 
   test("get a playlist - bad id", async () => {
@@ -50,7 +52,7 @@ suite("Playlist API tests", () => {
   test("get a playlist - deleted playlist", async () => {
     await playtimeService.deleteAllPlaylists();
     try {
-      await playtimeService.getPlaylist(testPlaylists[0]._id);
+      await playtimeService.getPlaylist(playlist[0]._id);
       assert.fail("Should not return a response");
     } catch (error) {
       assert(error.response.data.message === "No Playlist with this id");
