@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { EventEmitter } from "events";
-import { testTracks, violin, violinConcerto } from "../fixtures.js";
+import { authUser, testTracks, violin, violinConcerto } from "../fixtures.js";
 import { playtimeService } from "./playtime-service.js";
 import { assertSubset } from "../test-utils.js";
 
@@ -12,6 +12,9 @@ suite("Track API tests", () => {
   let playlist = null;
 
   setup(async () => {
+    await playtimeService.clearAuth();
+    await playtimeService.createUser(authUser);
+    await playtimeService.authenticate(authUser);
     await playtimeService.deleteAllPlaylists();
     await playtimeService.deleteAllTracks();
     playlist = await playtimeService.createPlaylist(violin);

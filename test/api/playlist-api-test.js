@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { testPlaylists, vivaldi } from "../fixtures.js";
+import { authUser, testPlaylists, vivaldi } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 import { playtimeService } from "./playtime-service.js";
 
@@ -7,6 +7,9 @@ const playlist = new Array(testPlaylists.length);
 
 suite("Playlist API tests", () => {
   setup(async () => {
+    await playtimeService.clearAuth();
+    const user = await playtimeService.createUser(authUser);
+    const response = await playtimeService.authenticate(authUser);
     await playtimeService.deleteAllPlaylists();
     for (let i = 0; i < testPlaylists.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
