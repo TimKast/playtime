@@ -5,7 +5,11 @@ export const IdSpec = Joi.alternatives().try(Joi.string(), Joi.object()).descrip
 export const JwtSpec = Joi.object()
   .keys({
     success: Joi.boolean().example(true).required(),
-    token: Joi.string().required(),
+    token: Joi.string()
+      .example(
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDQ4NDU4OTQ4NWY2NjhkM2VmODcwMSIsImVtYWlsIjoiaG9tZXJAc2ltcHNvbi5jb20iLCJpYXQiOjE3NjE5MDQxMTUsImV4cCI6MTc2MTkwNzcxNX0.MAGwKJmmjkGlwKpd4o4RODwdzhmkdTLYig1fKZbYwss"
+      )
+      .required(),
   })
   .label("JwtDetails");
 
