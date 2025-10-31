@@ -1,12 +1,12 @@
 import { assert } from "chai";
 import { playtimeService } from "./playtime-service.js";
 import { decodeToken } from "../../src/api/jwt-utils.js";
-import { authUser } from "../fixtures.js";
+import { authCredentials, authUser } from "../fixtures.js";
 
 suite("Authentication API tests", async () => {
   setup(async () => {
     await playtimeService.createUser(authUser);
-    await playtimeService.authenticate(authUser);
+    await playtimeService.authenticate(authCredentials);
     await playtimeService.deleteAllUsers();
     await playtimeService.clearAuth();
   });
@@ -14,14 +14,14 @@ suite("Authentication API tests", async () => {
 
   test("authenticate", async () => {
     const returnedUser = await playtimeService.createUser(authUser);
-    const response = await playtimeService.authenticate(authUser);
+    const response = await playtimeService.authenticate(authCredentials);
     assert(response.success);
     assert.isDefined(response.token);
   });
 
   test("verify Token", async () => {
     const returnedUser = await playtimeService.createUser(authUser);
-    const response = await playtimeService.authenticate(authUser);
+    const response = await playtimeService.authenticate(authCredentials);
 
     const userInfo = decodeToken(response.token);
     assert.equal(userInfo.email, returnedUser.email);

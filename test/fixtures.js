@@ -7,6 +7,11 @@ export const authUser = {
   password: "secret",
 };
 
+export const authCredentials = {
+  email: authUser.email,
+  password: authUser.password,
+};
+
 export const maggie = {
   firstName: "Maggie",
   lastName: "Simpson",

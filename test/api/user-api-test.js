@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { playtimeService } from "./playtime-service.js";
 import { assertSubset } from "../test-utils.js";
-import { authUser, maggie, testUsers } from "../fixtures.js";
+import { authCredentials, authUser, maggie, testUsers } from "../fixtures.js";
 
 const users = new Array(testUsers.length);
 
@@ -9,10 +9,10 @@ suite("User API tests", () => {
   setup(async () => {
     await playtimeService.clearAuth();
     await playtimeService.createUser(authUser);
-    await playtimeService.authenticate(authUser);
+    await playtimeService.authenticate(authCredentials);
     await playtimeService.deleteAllUsers();
     await playtimeService.createUser(authUser);
-    await playtimeService.authenticate(authUser);
+    await playtimeService.authenticate(authCredentials);
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       users[i] = await playtimeService.createUser(testUsers[i]);
@@ -31,7 +31,7 @@ suite("User API tests", () => {
     assert.equal(returnedUsers.length, 4);
     await playtimeService.deleteAllUsers();
     await playtimeService.createUser(authUser);
-    await playtimeService.authenticate(authUser);
+    await playtimeService.authenticate(authCredentials);
     returnedUsers = await playtimeService.getAllUsers();
     assert.equal(returnedUsers.length, 1);
   });
@@ -54,7 +54,7 @@ suite("User API tests", () => {
   test("get a user - deleted user", async () => {
     await playtimeService.deleteAllUsers();
     await playtimeService.createUser(authUser);
-    await playtimeService.authenticate(authUser);
+    await playtimeService.authenticate(authCredentials);
     try {
       await playtimeService.getUser(users[0]._id);
       assert.fail("Should not return a response");

@@ -102,7 +102,7 @@ export const userApi = {
     tags: ["api"],
     description: "Authenticate a user",
     notes: "This endpoint authenticates a user and returns a JWT token.",
-    validate: { payload: UserSpec, failAction: validationError },
+    validate: { payload: UserCredentialsSpec, failAction: validationError },
     response: { schema: JwtSpec, failAction: validationError },
   },
 };
