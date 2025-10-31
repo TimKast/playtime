@@ -2,6 +2,13 @@ import Joi from "joi";
 
 export const IdSpec = Joi.alternatives().try(Joi.string(), Joi.object()).description("a valid ID");
 
+export const JwtSpec = Joi.object()
+  .keys({
+    success: Joi.boolean().example(true).required(),
+    token: Joi.string().required(),
+  })
+  .label("JwtDetails");
+
 export const TrackSpec = Joi.object()
   .keys({
     title: Joi.string().example("The four Seasons").required(),
